@@ -1,7 +1,893 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Pandemic Preparedness & Remote Resilience</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F5F0E8;
+    --ink: #1A1612;
+    --ink-muted: #5C5550;
+    --ink-faint: #9E9890;
+    --accent: #B85C38;
+    --accent-light: #EDD9CE;
+    --teal: #2A6B6E;
+    --teal-light: #D0E9EA;
+    --border: rgba(26,22,18,0.12);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,232,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 6rem 5rem 6rem 6rem;
+    border-right: 1px solid var(--border);
+  }
+  .hero-tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 4vw, 4.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    font-size: 1rem;
+    color: var(--ink-muted);
+    max-width: 420px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+  .hero-meta {
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .hero-meta-item {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .hero-meta-item span {
+    color: var(--ink-muted);
+    font-weight: 500;
+  }
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 6rem 6rem 6rem 5rem;
+    gap: 2rem;
+  }
+  .hero-stat {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+  }
+  .hero-stat-num {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  .hero-stat-label {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 7rem 6rem; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 2rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+  .section-num {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    color: var(--ink);
+  }
+
+  /* ABOUT */
+  .about { background: var(--ink); }
+  .about .section-title { color: var(--cream); }
+  .about .section-num { color: rgba(245,240,232,0.35); }
+  .about .section-header { border-color: rgba(245,240,232,0.12); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-lead {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--cream);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  .about-body {
+    color: rgba(245,240,232,0.65);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .about-body p + p { margin-top: 1rem; }
+
+  /* RESEARCH */
+  .research { background: white; }
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .research-card {
+    background: white;
+    padding: 2.5rem 2rem;
+    transition: background 0.2s;
+  }
+  .research-card:hover { background: var(--accent-light); }
+  .research-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 18px;
+  }
+  .research-card-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .research-card-body {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    line-height: 1.75;
+  }
+
+  /* TIMELINE */
+  .timeline-section { background: var(--cream); }
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3.5rem 3rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px; top: 6px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--cream);
+  }
+  .timeline-phase {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+  }
+  .timeline-heading {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+  .timeline-body {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    max-width: 680px;
+    line-height: 1.8;
+  }
+  .timeline-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .tag {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--teal-light);
+    color: var(--teal);
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+  }
+  .tag.accent {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+
+  /* PITCH */
+  .pitch-section { background: var(--teal); overflow: hidden; position: relative; }
+  .pitch-section .section-title { color: var(--cream); }
+  .pitch-section .section-num { color: rgba(245,240,232,0.35); }
+  .pitch-section .section-header { border-color: rgba(245,240,232,0.15); }
+  .pitch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .pitch-desc {
+    font-size: 1rem;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.8;
+  }
+  .pitch-desc p + p { margin-top: 1rem; }
+  .pitch-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .pitch-feature {
+    background: rgba(245,240,232,0.08);
+    border: 1px solid rgba(245,240,232,0.12);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .pitch-feature-title {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .pitch-feature-body {
+    font-size: 0.82rem;
+    color: rgba(245,240,232,0.55);
+    line-height: 1.65;
+  }
+
+  /* DESIGN DOC */
+  .design-section { background: white; }
+  .design-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .design-toc {
+    position: sticky;
+    top: 100px;
+  }
+  .design-toc-title {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+  .design-toc-list { list-style: none; }
+  .design-toc-list li {
+    border-top: 1px solid var(--border);
+    padding: 0.6rem 0;
+  }
+  .design-toc-list a {
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .design-toc-list a:hover { color: var(--accent); }
+  .design-content {}
+  .design-block {
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .design-block:last-child { border-bottom: none; }
+  .design-block-title {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  .design-block-body {
+    font-size: 0.925rem;
+    color: var(--ink-muted);
+    line-height: 1.85;
+  }
+  .design-block-body p + p { margin-top: 0.75rem; }
+  .highlight-box {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.5rem 0;
+    font-size: 0.875rem;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  /* INTERVIEWS */
+  .interviews-section { background: var(--cream); }
+  .interview-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  .interview-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .interview-quote {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+    font-style: italic;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+  .interview-quote::before { content: '\201C'; color: var(--accent); }
+  .interview-quote::after { content: '\201D'; color: var(--accent); }
+  .interview-meta {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .interview-meta span { color: var(--ink-muted); font-weight: 500; }
+  .interview-finding {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+
+  /* REFLECTION */
+  .reflection-section { background: var(--ink); }
+  .reflection-section .section-title { color: var(--cream); }
+  .reflection-section .section-num { color: rgba(245,240,232,0.25); }
+  .reflection-section .section-header { border-color: rgba(245,240,232,0.1); }
+  .reflection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .reflection-card {
+    border-top: 1px solid rgba(245,240,232,0.15);
+    padding-top: 2rem;
+  }
+  .reflection-num {
+    font-family: var(--serif);
+    font-size: 2.5rem;
+    color: rgba(245,240,232,0.15);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+  .reflection-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 0.75rem;
+  }
+  .reflection-body {
+    font-size: 0.875rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.75;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    padding: 3rem 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--ink);
+  }
+  .footer-info {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* SCROLL FADE */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 6rem 2rem 3rem; border-right: none; border-bottom: 1px solid var(--border); }
+    .hero-right { padding: 3rem 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    section { padding: 4rem 2rem; }
+    .about-grid, .pitch-grid, .design-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .research-grid { grid-template-columns: 1fr; }
+    .interview-cards { grid-template-columns: 1fr; }
+    .reflection-grid { grid-template-columns: 1fr; }
+    .pitch-features { grid-template-columns: 1fr; }
+    .design-toc { display: none; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 2rem; }
+    .footer-info { text-align: center; }
+  }
+</style>
+</head>
 <body>
-  <h1>Hello, World!</h1>
-  <p>Welcome to my personal site.</p>
+
+<nav>
+  <a href="#top" class="nav-logo">Wei Hu — Portfolio</a>
+  <ul class="nav-links">
+    <li><a href="#research">Research</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#pitch">Prototype</a></li>
+    <li><a href="#design">Design</a></li>
+    <li><a href="#interviews">Interviews</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-left">
+    <div class="hero-tag">Class Portfolio · Team 3 · Section 2</div>
+    <h1 class="hero-title">
+      Pandemic Preparedness<br>
+      &amp; <em>Remote Resilience</em><br>
+      for Critical Infrastructure
+    </h1>
+    <p class="hero-sub">
+      A semester-long design research project exploring how essential workers can maintain safety, connectivity, and operational capacity during public health emergencies.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">Student — <span>Wei Hu</span></div>
+      <div class="hero-meta-item">Team — <span>Team 3, Section 22</span></div>
+      <div class="hero-meta-item">Focus — <span>Critical Infrastructure Workers</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat">
+      <div class="hero-stat-num">5</div>
+      <div class="hero-stat-label">Research documents</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">3</div>
+      <div class="hero-stat-label">Design phases</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">∞</div>
+      <div class="hero-stat-label">Problems to solve</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="section-header">
+    <span class="section-num">00</span>
+    <h2 class="section-title">Project Overview</h2>
+  </div>
+  <div class="about-grid fade-in">
+    <p class="about-lead">
+      "How do we keep essential workers safe, connected, and effective when the world shuts down?"
+    </p>
+    <div class="about-body">
+      <p>
+        This project investigates the intersection of pandemic preparedness and remote work resilience for critical infrastructure workers — the people who keep power grids running, water flowing, hospitals stocked, and supply chains intact, regardless of what emergency unfolds.
+      </p>
+      <p>
+        Through primary interviews, secondary research, design documentation, and a working prototype pitch, this portfolio captures a full human-centered design process from problem scoping through to proposed solution.
+      </p>
+      <p>
+        The work emerged from a recognition that "working from home" is not an option for large segments of the essential workforce, yet pandemic policies were often designed with knowledge workers in mind.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="research" id="research">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Secondary Research</h2>
+  </div>
+  <div class="research-grid fade-in">
+    <div class="research-card">
+      <div class="research-icon">⚡</div>
+      <h3 class="research-card-title">Critical Infrastructure Vulnerability</h3>
+      <p class="research-card-body">
+        Essential sectors including energy, water, transportation, healthcare, and food supply depend on a workforce that cannot simply "log in remotely." Research mapped the unique exposure risks facing these workers during pandemic surges, including proximity to colleagues, shared equipment, and high-contact public environments.
+      </p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🏥</div>
+      <h3 class="research-card-title">Existing Policy Gaps</h3>
+      <p class="research-card-body">
+        Early pandemic guidance focused heavily on office-based remote transitions, leaving operational roles underserved. Research identified inconsistencies in PPE allocation, exposure notification protocols, and mental health support for shift workers who faced elevated risk with fewer flexible arrangements.
+      </p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">📡</div>
+      <h3 class="research-card-title">Technology as Bridge</h3>
+      <p class="research-card-body">
+        A key research thread explored how digital tools — from real-time health monitoring to remote diagnostics and asynchronous communication platforms — could extend the capabilities of on-site workers while reducing unnecessary physical presence through smarter shift design and digital oversight.
+      </p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🧠</div>
+      <h3 class="research-card-title">Mental Health &amp; Burnout</h3>
+      <p class="research-card-body">
+        Secondary sources consistently flagged psychological toll as an underappreciated dimension of pandemic resilience. Essential workers reported elevated anxiety, moral injury, and compassion fatigue. The research grounded our design in the understanding that resilience is emotional as much as operational.
+      </p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🏗️</div>
+      <h3 class="research-card-title">Organizational Preparedness</h3>
+      <p class="research-card-body">
+        Organizations with pre-existing continuity plans, decentralized command structures, and trained crisis teams demonstrated dramatically better outcomes. Research surfaced best practices from industries with strong safety cultures — nuclear, aviation, oil &amp; gas — as models transferable to other critical sectors.
+      </p>
+    </div>
+    <div class="research-card">
+      <div class="research-icon">🌐</div>
+      <h3 class="research-card-title">Global Comparative Cases</h3>
+      <p class="research-card-body">
+        Cross-country comparison revealed how Taiwan, South Korea, and New Zealand maintained infrastructure stability through early, coordinated action. These cases informed design principles around rapid information flow, decentralized decision authority, and trust between workers and management.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS TIMELINE -->
+<section class="timeline-section" id="process">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Design Process</h2>
+  </div>
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-phase">Phase 1 — Discover</div>
+      <h3 class="timeline-heading">Problem Framing &amp; Scope Definition</h3>
+      <p class="timeline-body">
+        The team began by examining the pandemic experience through the lens of workers who had no remote option. We asked: what do these workers need that they don't have? Initial desk research and team discussions helped us narrow from a sprawling crisis landscape to a focused design challenge — building resilience at the worker level, not just the policy level.
+      </p>
+      <div class="timeline-tags">
+        <span class="tag">Secondary Research</span>
+        <span class="tag">Problem Scoping</span>
+        <span class="tag accent">Team Alignment</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">Phase 2 — Empathize</div>
+      <h3 class="timeline-heading">Primary Research &amp; User Interviews</h3>
+      <p class="timeline-body">
+        We conducted structured interviews with individuals working in or adjacent to critical infrastructure roles. The sessions explored daily routines during pandemic conditions, the friction points in their professional lives, communication breakdowns, and what support would have made a meaningful difference. Findings were synthesized into themes and design implications.
+      </p>
+      <div class="timeline-tags">
+        <span class="tag">User Interviews</span>
+        <span class="tag">Affinity Mapping</span>
+        <span class="tag accent">Insight Synthesis</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">Phase 3 — Define</div>
+      <h3 class="timeline-heading">Design Documentation &amp; How Might We</h3>
+      <p class="timeline-body">
+        Interview insights fed directly into a formal design document. We articulated personas, journey maps, pain points, and opportunity areas. The design document served as our north star — a shared reference that kept the team aligned on who we were designing for and what success would look like for them.
+      </p>
+      <div class="timeline-tags">
+        <span class="tag">Persona Development</span>
+        <span class="tag">Journey Mapping</span>
+        <span class="tag accent">HMW Questions</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-phase">Phase 4 — Ideate &amp; Prototype</div>
+      <h3 class="timeline-heading">Pitch Deck &amp; Prototype Development</h3>
+      <p class="timeline-body">
+        With a clear problem definition in hand, we moved into solution space. The team ideated broadly, then converged on a core concept: a platform that supports essential workers through the full arc of an emergency — preparation, active response, and recovery. We built an initial prototype and prepared a pitch to communicate the concept's value and feasibility.
+      </p>
+      <div class="timeline-tags">
+        <span class="tag">Concept Ideation</span>
+        <span class="tag">Prototype</span>
+        <span class="tag accent">Pitch Deck</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PITCH / PROTOTYPE -->
+<section class="pitch-section" id="pitch">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Pitch &amp; Prototype</h2>
+  </div>
+  <div class="pitch-grid fade-in">
+    <div>
+      <div class="pitch-desc">
+        <p>
+          The pitch articulates our solution concept to an audience of stakeholders who need to understand both the urgency of the problem and the feasibility of the proposed approach.
+        </p>
+        <p>
+          Our prototype envisions a platform that empowers critical infrastructure organizations to maintain worker safety and operational continuity during public health emergencies. Rather than relying on improvised responses, the tool builds resilience ahead of time.
+        </p>
+        <p>
+          The design centers three principles: <strong style="color: var(--cream);">anticipation</strong> (systems in place before emergencies strike), <strong style="color: var(--cream);">transparency</strong> (workers know what's happening and why), and <strong style="color: var(--cream);">agency</strong> (workers have meaningful input into their conditions).
+        </p>
+      </div>
+    </div>
+    <div class="pitch-features">
+      <div class="pitch-feature">
+        <h4 class="pitch-feature-title">Real-Time Health Status</h4>
+        <p class="pitch-feature-body">Workers report health status through a simple daily check-in. The system flags exposure risks and enables dynamic shift reallocation before problems escalate.</p>
+      </div>
+      <div class="pitch-feature">
+        <h4 class="pitch-feature-title">Emergency Communication Hub</h4>
+        <p class="pitch-feature-body">A centralized channel for verified information — cutting through rumor and confusion with authoritative, role-specific updates from organizational leadership.</p>
+      </div>
+      <div class="pitch-feature">
+        <h4 class="pitch-feature-title">Continuity Planning Tools</h4>
+        <p class="pitch-feature-body">Scenario planning modules help teams model workforce disruptions and identify single points of failure before an emergency materializes.</p>
+      </div>
+      <div class="pitch-feature">
+        <h4 class="pitch-feature-title">Wellbeing &amp; Support Access</h4>
+        <p class="pitch-feature-body">Integrated pathways to mental health resources, peer support networks, and financial assistance programs — reducing the stigma of asking for help during a crisis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN DOCUMENT -->
+<section class="design-section" id="design">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Design Document</h2>
+  </div>
+  <div class="design-grid fade-in">
+    <div class="design-toc">
+      <div class="design-toc-title">Contents</div>
+      <ul class="design-toc-list">
+        <li><a href="#dd-problem">Problem Statement</a></li>
+        <li><a href="#dd-persona">Primary Persona</a></li>
+        <li><a href="#dd-principles">Design Principles</a></li>
+        <li><a href="#dd-constraints">Constraints</a></li>
+        <li><a href="#dd-opportunity">Opportunity Areas</a></li>
+      </ul>
+    </div>
+    <div class="design-content">
+      <div class="design-block" id="dd-problem">
+        <h3 class="design-block-title">Problem Statement</h3>
+        <div class="design-block-body">
+          <p>Critical infrastructure workers are structurally excluded from the protective measures — remote work, flexible schedules, geographic distancing — that pandemic policies most commonly prescribe. When public health emergencies strike, these workers face a binary choice: continue working under elevated risk, or abandon their post and compromise the systems their communities depend on.</p>
+          <div class="highlight-box">
+            How might we design tools and systems that allow critical infrastructure workers to maintain operational effectiveness during public health emergencies without sacrificing their personal health, safety, and wellbeing?
+          </div>
+          <p>The problem is not a lack of technology — it is a lack of technology designed specifically for this population, their constraints, and their needs.</p>
+        </div>
+      </div>
+
+      <div class="design-block" id="dd-persona">
+        <h3 class="design-block-title">Primary Persona</h3>
+        <div class="design-block-body">
+          <p><strong>Marcus, 38 — Wastewater Treatment Plant Operator</strong></p>
+          <p>Marcus has worked in public utilities for 14 years. He is considered essential by every definition: the plant cannot run without qualified operators on site, 24 hours a day. During the pandemic, Marcus worked through fear, watched colleagues fall ill, and received information about protective policies inconsistently through a patchwork of texts, union bulletins, and overheard conversations.</p>
+          <p>His core needs: reliable information he can trust, clear protocols that protect him without humiliating him, and confidence that the organization has his back when things get hard.</p>
+        </div>
+      </div>
+
+      <div class="design-block" id="dd-principles">
+        <h3 class="design-block-title">Design Principles</h3>
+        <div class="design-block-body">
+          <p><strong>1. Dignity first.</strong> Any solution must treat workers as partners, not data points. Monitoring tools that feel surveillance-oriented will be resisted and will fail.</p>
+          <p><strong>2. Simplicity under stress.</strong> Emergency conditions degrade cognitive capacity. Interfaces must be operable under stress, fatigue, and time pressure.</p>
+          <p><strong>3. Built for connectivity gaps.</strong> Critical infrastructure facilities often have limited internet access. Solutions must function offline or in low-bandwidth environments.</p>
+          <p><strong>4. Institutional trust as prerequisite.</strong> Technology alone cannot solve a trust deficit. The platform must be paired with genuine organizational commitments to worker wellbeing.</p>
+        </div>
+      </div>
+
+      <div class="design-block" id="dd-constraints">
+        <h3 class="design-block-title">Key Constraints</h3>
+        <div class="design-block-body">
+          <p>The design process surfaced several non-negotiable constraints that any solution must respect:</p>
+          <p>Workers in regulated industries face strict data privacy requirements — health status data is especially sensitive. Any platform collecting wellbeing information must meet HIPAA and sector-specific compliance standards.</p>
+          <p>Shift workers and those in field roles rarely sit at a desk. The solution must be mobile-first, quick-to-use, and designed for glanced interactions rather than sustained attention.</p>
+          <p>Labor relations are a design constraint as much as a social one. Any organizational adoption requires union consultation and worker buy-in from the earliest stages.</p>
+        </div>
+      </div>
+
+      <div class="design-block" id="dd-opportunity">
+        <h3 class="design-block-title">Opportunity Areas</h3>
+        <div class="design-block-body">
+          <p><strong>Information credibility:</strong> Workers reported that misinformation spread faster than official guidance during the pandemic. A verified, role-specific information layer represents a clear and immediate opportunity.</p>
+          <p><strong>Peer connection:</strong> Isolation — even when physically co-located with colleagues — was a recurring theme. Digital tools that strengthen peer support networks can complement existing organizational structures.</p>
+          <p><strong>Pre-emptive planning:</strong> Most preparedness work happens reactively. Tools that help organizations run through scenarios and identify gaps before emergencies occur represent high-value, underserved territory.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERVIEWS -->
+<section class="interviews-section" id="interviews">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Interview Insights</h2>
+  </div>
+  <div class="interview-cards fade-in">
+    <div class="interview-card">
+      <p class="interview-quote">We kept showing up because someone had to. But nobody told us what was really going on — we were just expected to be there.</p>
+      <div class="interview-meta">Participant — <span>Essential Services Worker</span></div>
+      <p class="interview-finding">Insight: Information asymmetry between management and frontline workers created anxiety that compounded physical risk. Workers who feel informed feel safer, regardless of the actual hazard level.</p>
+    </div>
+    <div class="interview-card">
+      <p class="interview-quote">The hardest part was not the virus. It was not knowing if the organization actually had a plan, or if we were just figuring it out as we went.</p>
+      <div class="interview-meta">Participant — <span>Logistics Operator</span></div>
+      <p class="interview-finding">Insight: Perceived organizational preparedness was a stronger predictor of worker stress than actual exposure risk. Visible planning signals matter enormously to workforce confidence.</p>
+    </div>
+    <div class="interview-card">
+      <p class="interview-quote">There was no space to say "I'm struggling." You just pushed through. That's the culture. But it wears you down faster than you realize.</p>
+      <div class="interview-meta">Participant — <span>Healthcare Support Staff</span></div>
+      <p class="interview-finding">Insight: Psychological safety is a prerequisite for workers to use wellbeing tools. Platforms that require self-disclosure in a culture of stoicism will see low adoption without cultural shifts alongside technology.</p>
+    </div>
+    <div class="interview-card">
+      <p class="interview-quote">My team figured out our own system — text messages, a shared spreadsheet. It worked, but it was exhausting to maintain on top of everything else.</p>
+      <div class="interview-meta">Participant — <span>Utility Sector Supervisor</span></div>
+      <p class="interview-finding">Insight: Workers are already building informal workarounds. Good design should formalize and improve what people are already doing rather than replacing organic solutions with top-down mandates.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REFLECTION -->
+<section class="reflection-section" id="reflection">
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Reflections &amp; Learnings</h2>
+  </div>
+  <div class="reflection-grid fade-in">
+    <div class="reflection-card">
+      <div class="reflection-num">01</div>
+      <h3 class="reflection-title">Empathy is earned, not assumed</h3>
+      <p class="reflection-body">
+        Sitting with interview participants and genuinely suspending assumptions was the most valuable skill developed in this process. The people we spoke with had sophisticated understandings of their own situations — our job was to listen and learn, not to arrive with pre-formed solutions.
+      </p>
+    </div>
+    <div class="reflection-card">
+      <div class="reflection-num">02</div>
+      <h3 class="reflection-title">Constraints are the design material</h3>
+      <p class="reflection-body">
+        The toughest constraints — offline operation, labor relations, HIPAA compliance — turned out to be the most generative. Working within real boundaries produced ideas that could actually exist in the world, rather than elegant concepts that would never survive contact with reality.
+      </p>
+    </div>
+    <div class="reflection-card">
+      <div class="reflection-num">03</div>
+      <h3 class="reflection-title">Teams diverge and converge</h3>
+      <p class="reflection-body">
+        Collaborative design requires tolerance for disagreement during ideation and commitment to convergence during delivery. Learning to hold both — encouraging diverse thinking and then synthesizing into coherent direction — was a key interpersonal and professional development throughout the semester.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Wei Hu — Class Portfolio, 2024–25</div>
+  <div class="footer-info">
+    Team 3 · Section 22<br>
+    Pandemic Preparedness &amp; Remote Resilience for Critical Infrastructure Workers
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
